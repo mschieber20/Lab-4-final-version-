@@ -1,7 +1,7 @@
 ---
 title: "Lab 04 - La Quinta is Spanish for next to Denny's, Pt. 1"
-author: "Insert your name here"
-date: "Insert date here"
+author: "Marq Schieber"
+date: "2/27/2022"
 output: github_document
 ---
 
@@ -18,34 +18,91 @@ states <- read_csv("data/states.csv")
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+What are the dimensions of the Denny’s dataset? (Hint: Use inline R code and functions like nrow and ncol to compose your answer.) What does each row in the dataset represent? What are the variables?
+
+Dimensions: 1643 rwos by 6 collumns. The variables include: address, city, latitude, longitude, state and zip. Each row is a different Denny's location.
+
+
+
+```{r}
+nrow(dennys)
+ncol(dennys)
+ls(dennys)
+```
+
 
 ### Exercise 2
 
-Remove this text, and add your answer for Exercise 2 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+What are the dimensions of the La Quinta’s dataset? What does each row in the dataset represent? What are the variables?
+
+Dimensions: 909 by 6
+Rows: La Quinta Locations
+Variables: address, city, latitude, longitude, state and zip
+
+```{r}
+nrow(laquinta)
+ncol(laquinta)
+ls(laquinta)
+```
+
 
 ### Exercise 3
+
+Take a look at the websites that the data come from (linked above). Are there any La Quinta’s locations outside of the US? If so, which countries? What about Denny’s?
+
+No Denny's are found abroad.
+
+La Quinta can be found outside the US in: Canada, Mexico, China, New Zealand, Honduras, Turkey, UAE, Chile and Colombia.
 
 ...
 
 ### Exercise 4
 
-...
+Brainstorming: You could filter by state. Any non-US states are abroad. 
+
+
+
 
 ### Exercise 5
 
-...
+  
+```{r}
+dennys %>%
+  filter(!(state %in% states$abbreviation))
+```
+  
+  0 locations
 
 ### Exercise 6
 
-...
+```{r}
+dennys %>%
+  mutate(country = "United States")
+```
 
- 
+### Exercise 7
+
+```{r}
+laquinta %>%
+  filter(!(state %in% states$abbreviation))
+```
+
+### Exercise 8
+
+```{r}
+laquinta %>%
+  mutate(country = case_when(
+    state %in% states$abbreviation ~ "United States",
+    state %in% c("ON", "BC") ~ "Canada",
+    state == "ANT"           ~ "Colombia",
+    state == "FM" ~"Honduras",
+    state %in% c("AG" , "QR" , "CH" , "NL" , "VE" , "PU" , "SL") ~ "Mexico"
+  )) %>%
+  filter(country == "United States")
+```
+
+### Exercise 9
+
+
 Add exercise headings as needed.
 
