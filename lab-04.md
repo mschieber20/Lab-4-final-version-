@@ -185,4 +185,63 @@ laquinta %>%
 
 ### Exercise 9
 
-Add exercise headings as needed.
+``` r
+dennys %>%
+  count(state) %>%
+  inner_join(states, by = c("state" = "abbreviation"))
+```
+
+    ## # A tibble: 51 × 4
+    ##    state     n name                     area
+    ##    <chr> <int> <chr>                   <dbl>
+    ##  1 AK        3 Alaska               665384. 
+    ##  2 AL        7 Alabama               52420. 
+    ##  3 AR        9 Arkansas              53179. 
+    ##  4 AZ       83 Arizona              113990. 
+    ##  5 CA      403 California           163695. 
+    ##  6 CO       29 Colorado             104094. 
+    ##  7 CT       12 Connecticut            5543. 
+    ##  8 DC        2 District of Columbia     68.3
+    ##  9 DE        1 Delaware               2489. 
+    ## 10 FL      140 Florida               65758. 
+    ## # … with 41 more rows
+
+``` r
+laquinta %>%
+  count(state) %>%
+  inner_join(states, by = c("state" = "abbreviation"))
+```
+
+    ## # A tibble: 48 × 4
+    ##    state     n name           area
+    ##    <chr> <int> <chr>         <dbl>
+    ##  1 AK        2 Alaska      665384.
+    ##  2 AL       16 Alabama      52420.
+    ##  3 AR       13 Arkansas     53179.
+    ##  4 AZ       18 Arizona     113990.
+    ##  5 CA       56 California  163695.
+    ##  6 CO       27 Colorado    104094.
+    ##  7 CT        6 Connecticut   5543.
+    ##  8 FL       74 Florida      65758.
+    ##  9 GA       41 Georgia      59425.
+    ## 10 IA        4 Iowa         56273.
+    ## # … with 38 more rows
+
+### Exercise 10
+
+It looks like California has the most Denny’s. Texas has the most
+laquintas.
+
+``` r
+dennys <- dennys %>%
+  mutate(establishment = "Denny's")
+laquinta <- laquinta %>%
+  mutate(establishment = "La Quinta")
+
+dn_lq <- bind_rows(dennys, laquinta)
+
+ggplot(dn_lq, mapping = aes(x = longitude, y = latitude, color = establishment)) +
+  geom_point()
+```
+
+![](lab-04_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->

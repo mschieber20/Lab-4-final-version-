@@ -103,6 +103,39 @@ laquinta %>%
 
 ### Exercise 9
 
+```{r}
+dennys %>%
+  count(state) %>%
+  inner_join(states, by = c("state" = "abbreviation"))
+```
 
-Add exercise headings as needed.
+```{r}
+laquinta %>%
+  count(state) %>%
+  inner_join(states, by = c("state" = "abbreviation"))
+```
+
+
+### Exercise 10
+
+It looks like California has the most Denny's.
+Texas has the most laquintas.
+
+```{r}
+dennys <- dennys %>%
+  mutate(establishment = "Denny's")
+laquinta <- laquinta %>%
+  mutate(establishment = "La Quinta")
+
+dn_lq <- bind_rows(dennys, laquinta)
+
+ggplot(dn_lq, mapping = aes(x = longitude, y = latitude, color = establishment)) +
+  geom_point()
+```
+
+
+
+
+
+
 
